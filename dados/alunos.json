@@ -8,5 +8,10 @@
         "id": 2,
         "nome": "joão silva",
         "ativo": true
+    },
+    {
+        "id": 3,
+        "nome": "leon de lamilha",
+        "ativo": true
     }
 ]
