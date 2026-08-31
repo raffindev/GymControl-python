@@ -1,1 +1,12 @@
-{}
+[
+    {
+        "id": 1,
+        "nome": "rafael de souza",
+        "ativo": true
+    },
+    {
+        "id": 2,
+        "nome": "joão silva",
+        "ativo": true
+    }
+]
