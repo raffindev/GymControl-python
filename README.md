@@ -61,12 +61,13 @@ O projeto está sendo desenvolvido de forma incremental, priorizando código fun
 
 > O módulo financeiro do estabelecimento será desenvolvido em uma etapa posterior.
 
-## 🗂️ Estrutura de dados
+## ## 🗂️ Estrutura de dados
 
-O projeto utiliza arquivos JSON para persistência inicialmente.
+O projeto utiliza arquivos **JSON** para persistência dos dados nesta primeira versão.
 
-Cada aluno possui uma pasta própria identificada por um ID de três dígitos:
+Cada aluno possui uma pasta própria identificada por um **ID de três dígitos**. O arquivo `alunos.json` funciona como um índice geral, enquanto os dados completos ficam organizados dentro da pasta individual de cada aluno.
 
+```text
 dados/
 ├── alunos.json
 │
@@ -81,25 +82,16 @@ dados/
     │   │
     │   └── avaliações/
     │       ├── avaliacao_atual.json
-    │       └── avaliacoes_antigas.json
-    │
-    ├── 002/
-    │   ├── cadastro/
-    │   │   └── dados_cadastrais.json
-    │   │
-    │   ├── treinos/
-    │   │   ├── treino_atual.json
-    │   │   └── historico_treinos.json
-    │   │
-    │   └── avaliações/
-    │       ├── avaliacao_atual.json
-    │       └── avaliacoes_antigas.json
+    │       └── historico_avaliacoes.json
     │
     └── ...
-alunos.json
+```
 
-O arquivo alunos.json funciona como um índice geral do sistema, contendo apenas os dados necessários para localizar e identificar rapidamente cada aluno:
+### `alunos.json`
 
+O arquivo `alunos.json` funciona como **índice principal do sistema**, contendo somente as informações necessárias para localizar e identificar rapidamente cada aluno:
+
+```json
 [
     {
         "id": 1,
@@ -110,22 +102,57 @@ O arquivo alunos.json funciona como um índice geral do sistema, contendo apenas
         "id": 2,
         "nome": "darth vader",
         "ativo": true
+    },
+    {
+        "id": 3,
+        "nome": "indiana jones",
+        "ativo": true
     }
 ]
+```
 
-Os dados cadastrais completos ficam armazenados na pasta individual de cada aluno.
+Dessa forma, consultas básicas, como listagem, busca por ID e verificação de status, podem ser realizadas sem carregar todo o cadastro do aluno.
 
-Cadastro
+### Cadastro
 
-O arquivo dados_cadastrais.json armazena os dados completos do aluno, incluindo informações pessoais, contato, endereço, plano e pagamento.
+Cada aluno possui um arquivo `dados_cadastrais.json`, responsável por armazenar seus dados completos.
 
-Treinos
+Entre eles estão:
 
-A pasta treinos/ será responsável pelo treino atual do aluno e pelo histórico de treinos anteriores.
+* dados básicos;
+* data de nascimento e idade;
+* sexo;
+* documento;
+* telefone e e-mail;
+* endereço;
+* plano e informações de pagamento.
 
-Avaliações
+### Treinos
 
-A pasta avaliações/ será responsável pela avaliação física atual e pelo histórico de avaliações.
+A pasta `treinos/` separa o treino atualmente utilizado pelo aluno de seu histórico:
+
+```text
+treinos/
+├── treino_atual.json
+└── historico_treinos.json
+```
+
+O `treino_atual.json` começa como um objeto vazio (`{}`), enquanto o `historico_treinos.json` começa como uma lista vazia (`[]`) para permitir o armazenamento de múltiplos registros.
+
+### Avaliações
+
+A pasta `avaliações/` segue a mesma lógica:
+
+```text
+avaliações/
+├── avaliacao_atual.json
+└── historico_avaliacoes.json
+```
+
+O `avaliacao_atual.json` começa como um objeto vazio (`{}`), enquanto o `historico_avaliacoes.json` começa como uma lista vazia (`[]`) para armazenar avaliações anteriores.
+
+Essa organização mantém os dados de cada aluno separados e facilita a evolução futura do sistema.
+
 
 ## 🏗️ Arquitetura
 

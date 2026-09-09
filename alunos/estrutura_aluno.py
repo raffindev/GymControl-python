@@ -5,8 +5,6 @@
 from pathlib import Path
 from utils.arquivos import salvar_json, ler_json
 
-from pathlib import Path
-
 def criar_estrutura_aluno(id_aluno, dados):
 
     # 1. Cria pasta do aluno
