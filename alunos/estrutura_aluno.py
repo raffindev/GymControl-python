@@ -5,6 +5,8 @@
 from pathlib import Path
 from utils.arquivos import salvar_json, ler_json
 
+from pathlib import Path
+
 def criar_estrutura_aluno(id_aluno, dados):
 
     # 1. Cria pasta do aluno
@@ -15,9 +17,25 @@ def criar_estrutura_aluno(id_aluno, dados):
     pasta_cadastro = pasta_aluno / "cadastro"
     pasta_cadastro.mkdir(parents=True, exist_ok=True)
 
-    # 3. Cria dados_cadastrais.json
-    caminho_do_arquivo = pasta_cadastro / "dados_cadastrais.json"
-    salvar_json(caminho_do_arquivo, dados)
+    # 3. Salva dados cadastrais
+    caminho_cadastro = pasta_cadastro / "dados_cadastrais.json"
+    salvar_json(caminho_cadastro, dados)
+
+    # 4. Cria pasta treinos
+    pasta_treinos = pasta_aluno / "treinos"
+    pasta_treinos.mkdir(parents=True, exist_ok=True)
+
+    # 5. Cria arquivos de treinos
+    salvar_json(pasta_treinos / "treino_atual.json", {})
+    salvar_json(pasta_treinos / "historico_treinos.json", [])
+
+    # 6. Cria pasta avaliações
+    pasta_avaliacoes = pasta_aluno / "avaliações"
+    pasta_avaliacoes.mkdir(parents=True, exist_ok=True)
+
+    # 7. Cria arquivos de avaliações
+    salvar_json(pasta_avaliacoes / "avaliacao_atual.json", {})
+    salvar_json(pasta_avaliacoes / "historico_avaliacoes.json", [])
 
 def ler_caminho_cadastro(id_aluno):
 

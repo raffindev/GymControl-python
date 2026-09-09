@@ -65,23 +65,67 @@ O projeto está sendo desenvolvido de forma incremental, priorizando código fun
 
 O projeto utiliza arquivos JSON para persistência inicialmente.
 
-```text
+Cada aluno possui uma pasta própria identificada por um ID de três dígitos:
+
 dados/
 ├── alunos.json
 │
 └── alunos/
-    ├── 01_rafael_souza/
-    │   ├── cadastro.json
-    │   ├── treinos.json
-    │   ├── avaliacoes.json
-    │   └── avaliacoes_passadas.json
+    ├── 001/
+    │   ├── cadastro/
+    │   │   └── dados_cadastrais.json
+    │   │
+    │   ├── treinos/
+    │   │   ├── treino_atual.json
+    │   │   └── historico_treinos.json
+    │   │
+    │   └── avaliações/
+    │       ├── avaliacao_atual.json
+    │       └── avaliacoes_antigas.json
+    │
+    ├── 002/
+    │   ├── cadastro/
+    │   │   └── dados_cadastrais.json
+    │   │
+    │   ├── treinos/
+    │   │   ├── treino_atual.json
+    │   │   └── historico_treinos.json
+    │   │
+    │   └── avaliações/
+    │       ├── avaliacao_atual.json
+    │       └── avaliacoes_antigas.json
     │
     └── ...
-```
+alunos.json
 
-O `alunos.json` funciona como índice geral do sistema, permitindo localizar os alunos e verificar seu status.
+O arquivo alunos.json funciona como um índice geral do sistema, contendo apenas os dados necessários para localizar e identificar rapidamente cada aluno:
 
-Os demais arquivos ficam dentro da pasta individual de cada aluno.
+[
+    {
+        "id": 1,
+        "nome": "obi wan kenobi",
+        "ativo": true
+    },
+    {
+        "id": 2,
+        "nome": "darth vader",
+        "ativo": true
+    }
+]
+
+Os dados cadastrais completos ficam armazenados na pasta individual de cada aluno.
+
+Cadastro
+
+O arquivo dados_cadastrais.json armazena os dados completos do aluno, incluindo informações pessoais, contato, endereço, plano e pagamento.
+
+Treinos
+
+A pasta treinos/ será responsável pelo treino atual do aluno e pelo histórico de treinos anteriores.
+
+Avaliações
+
+A pasta avaliações/ será responsável pela avaliação física atual e pelo histórico de avaliações.
 
 ## 🏗️ Arquitetura
 
