@@ -1,0 +1,24 @@
+{
+    "id": 2,
+    "nome": "darth vader",
+    "ativo": true,
+    "data_nascimento": "1977-05-04",
+    "idade": 49,
+    "sexo": "M",
+    "documento": "12345678901",
+    "telefone": "11982345896",
+    "email": "darth@gmail.com",
+    "endereço": {
+        "cidade": "Estrela da Morte",
+        "logradouro": "Cabine do Capitão",
+        "numero": "1",
+        "cep": "07931465"
+    },
+    "plano": {
+        "tipo": "mensal",
+        "data_inicio": "2026-09-08",
+        "data_vencimento": "2026-10-08",
+        "metodo_pagamento": "pix",
+        "status_pagamento": "pago"
+    }
+}

@@ -1,17 +1,12 @@
 [
     {
         "id": 1,
-        "nome": "rafael de souza",
+        "nome": "obi wan kenobi",
         "ativo": true
     },
     {
         "id": 2,
-        "nome": "joão silva",
-        "ativo": true
-    },
-    {
-        "id": 3,
-        "nome": "leon de lamilha",
+        "nome": "darth vader",
         "ativo": true
     }
 ]

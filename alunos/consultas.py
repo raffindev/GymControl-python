@@ -2,6 +2,8 @@
 #  Funções relacionadas a Buscar.
 # =================================
 
+from alunos.estrutura_aluno import ler_caminho_cadastro
+
 # Verificar ID
 def verificar_id_aluno(alunos, novo_aluno):
     for aluno in alunos:
@@ -42,3 +44,13 @@ def buscar_aluno_por_id(alunos):
         
     return "Aluno não encontrado"
 
+def verificar_duplicidade(dado, campo, alunos):
+
+    for aluno in alunos:
+        id_aluno = aluno["id"]
+
+        lista_cadastro = ler_caminho_cadastro(id_aluno)
+        if lista_cadastro.get(campo) == dado:
+            return True
+
+    return False

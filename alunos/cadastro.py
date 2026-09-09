@@ -4,6 +4,8 @@
 
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from alunos.estrutura_aluno import criar_estrutura_aluno, ler_caminho_cadastro, salvar_cadastro_aluno
+from alunos.consultas import verificar_duplicidade
 
 # Cadastrar aluno - Parte 1: Dados básicos
 def dados_iniciais_aluno(alunos):
@@ -44,7 +46,7 @@ def dados_iniciais_aluno(alunos):
 }
 
 # Cadastrar aluno - Parte 2: Dados pessoais
-def dados_pessoais(lista_cadastro):
+def dados_pessoais(lista_cadastro, alunos):
     # Data de nascimento e Idade
     while True:
         try:
@@ -83,7 +85,7 @@ def dados_pessoais(lista_cadastro):
         if len(cpf) != 11 or not cpf.isnumeric():
             print("CPF inválido")
 
-        elif any(cpf == aluno["documento"] for aluno in lista_cadastro):
+        elif verificar_duplicidade(cpf, "documento", alunos):
             print('CPF já cadastrado.')
             
         else:
@@ -96,7 +98,7 @@ def dados_pessoais(lista_cadastro):
         if len(telefone) != 11 or not telefone.isnumeric():
             print("telefone inválido")
 
-        elif any(telefone == aluno["telefone"] for aluno in lista_cadastro):
+        elif verificar_duplicidade(telefone, "telefone", alunos):
             print('telefone já cadastrado.')
             
         else:
@@ -118,7 +120,7 @@ def dados_pessoais(lista_cadastro):
             if '.' not in apos_arroba:
                 print('E-mail inválido.')
 
-            elif any(email == aluno["email"] for aluno in lista_cadastro):
+            elif verificar_duplicidade(email, "email", alunos):
                 print('E-mail já cadastrado.')
 
             else:
@@ -133,7 +135,8 @@ def dados_pessoais(lista_cadastro):
             print("Cidade não pode ficar vazia")
             continue
 
-        endereço["rua"] = input("Rua e número: ").strip()
+        endereço["logradouro"] = input("Logradouro: ").strip()
+        endereço["numero"] = input("numero: ").strip()
 
         endereço["cep"] = input("CEP: ").replace("-", "").strip()
 
@@ -201,25 +204,26 @@ def dados_plano_pagamento():
     }
 }
 
-# Gera a versão resumida do cadastro
-def base_aluno(cadastro):
-    return {
-    "id": cadastro["id"],
-    "nome": cadastro["nome"],
-    "ativo": cadastro["ativo"]
-}
-
-# Junta todas as partes do cadastro
-def cadastrar_aluno(alunos, lista_cadastro):
+# Cadastra a parte inicial do aluno
+def cadastrar_base(alunos):
 
     dados_iniciais = dados_iniciais_aluno(alunos)
-    dados_pessoais_aluno = dados_pessoais(lista_cadastro)
+    criar_estrutura_aluno(dados_iniciais["id"], dados_iniciais)
+    cadastro = {
+        **dados_iniciais
+    }
+    return cadastro
+
+# Junta todas as partes do cadastro
+def cadastrar_aluno(id_aluno, alunos):
+
+    lista_cadastro = ler_caminho_cadastro(id_aluno)
+    dados_pessoais_aluno = dados_pessoais(lista_cadastro, alunos)
     dados_plano = dados_plano_pagamento()
 
-    cadastro = {
-        **dados_iniciais,
-        **dados_pessoais_aluno,
-        **dados_plano
-    }
+    lista_cadastro.update(dados_pessoais_aluno)
+    lista_cadastro.update(dados_plano)
 
-    return cadastro
+    salvar_cadastro_aluno(id_aluno, lista_cadastro)
+
+    return lista_cadastro
