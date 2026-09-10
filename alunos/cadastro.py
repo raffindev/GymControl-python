@@ -5,7 +5,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from alunos.estrutura_aluno import criar_estrutura_aluno, ler_caminho_cadastro, salvar_cadastro_aluno
-from alunos.consultas import verificar_duplicidade
+from alunos.consultas import verificar_duplicidade_cadastral, cpf_validacao, verificar_duplicidade_documento
 
 # Cadastrar aluno - Parte 1: Dados básicos
 def dados_iniciais_aluno(alunos):
@@ -36,17 +36,23 @@ def dados_iniciais_aluno(alunos):
         else:
             break
 
+    # Documento
+    cpf = cpf_validacao()
+    if verificar_duplicidade_documento(cpf, alunos):
+        print("CPF já cadastrado.")
+
     # Cadastro Status
     status = True
 
     return{
     "id": id_aluno,
     "nome": nome,
+    "documento": cpf,
     "ativo": status
 }
 
 # Cadastrar aluno - Parte 2: Dados pessoais
-def dados_pessoais(lista_cadastro, alunos):
+def dados_pessoais(dados_cadastrais, alunos):
     # Data de nascimento e Idade
     while True:
         try:
@@ -78,19 +84,6 @@ def dados_pessoais(lista_cadastro, alunos):
         else:
             break
 
-    # Documento
-    while True:
-        cpf = input('Digite seu CPF: ').replace('.','').replace('-','')
-
-        if len(cpf) != 11 or not cpf.isnumeric():
-            print("CPF inválido")
-
-        elif verificar_duplicidade(cpf, "documento", alunos):
-            print('CPF já cadastrado.')
-            
-        else:
-            break
-
     # Telefone
     while True:
         telefone = input('Digite seu telefone com DDD: ').replace('.','').replace('-','')
@@ -98,7 +91,7 @@ def dados_pessoais(lista_cadastro, alunos):
         if len(telefone) != 11 or not telefone.isnumeric():
             print("telefone inválido")
 
-        elif verificar_duplicidade(telefone, "telefone", alunos):
+        elif verificar_duplicidade_cadastral(telefone, "telefone", alunos):
             print('telefone já cadastrado.')
             
         else:
@@ -120,7 +113,7 @@ def dados_pessoais(lista_cadastro, alunos):
             if '.' not in apos_arroba:
                 print('E-mail inválido.')
 
-            elif verificar_duplicidade(email, "email", alunos):
+            elif verificar_duplicidade_cadastral(email, "email", alunos):
                 print('E-mail já cadastrado.')
 
             else:
@@ -150,7 +143,6 @@ def dados_pessoais(lista_cadastro, alunos):
     "data_nascimento": str(data_nascimento),
     "idade": idade,
     "sexo": sexo,
-    "documento": cpf,
     "telefone": telefone,
     "email": email,
     "endereço": endereço
@@ -217,13 +209,13 @@ def cadastrar_base(alunos):
 # Junta todas as partes do cadastro
 def cadastrar_aluno(id_aluno, alunos):
 
-    lista_cadastro = ler_caminho_cadastro(id_aluno)
-    dados_pessoais_aluno = dados_pessoais(lista_cadastro, alunos)
+    dados_cadastrais = ler_caminho_cadastro(id_aluno)
+    dados_pessoais_aluno = dados_pessoais(dados_cadastrais, alunos)
     dados_plano = dados_plano_pagamento()
 
-    lista_cadastro.update(dados_pessoais_aluno)
-    lista_cadastro.update(dados_plano)
+    dados_cadastrais.update(dados_pessoais_aluno)
+    dados_cadastrais.update(dados_plano)
 
-    salvar_cadastro_aluno(id_aluno, lista_cadastro)
+    salvar_cadastro_aluno(id_aluno, dados_cadastrais)
 
-    return lista_cadastro
+    return dados_cadastrais

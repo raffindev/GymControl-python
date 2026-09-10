@@ -44,13 +44,33 @@ def buscar_aluno_por_id(alunos):
         
     return "Aluno não encontrado"
 
-def verificar_duplicidade(dado, campo, alunos):
+
+def verificar_duplicidade_documento(dado, alunos):
 
     for aluno in alunos:
-        id_aluno = aluno["id"]
-
-        lista_cadastro = ler_caminho_cadastro(id_aluno)
-        if lista_cadastro.get(campo) == dado:
+        if aluno["documento"] == dado:
             return True
 
     return False
+
+def verificar_duplicidade_cadastral(dado, campo, alunos):
+
+    for aluno in alunos:
+        id_aluno = aluno["id"]
+        
+        dados_cadastrais = ler_caminho_cadastro(id_aluno)
+        if dados_cadastrais.get(campo) == dado:
+            return True
+
+    return False
+
+def cpf_validacao():
+    while True:
+        cpf = input('Digite seu CPF: ').replace('.', '').replace('-', '')
+
+        if len(cpf) != 11 or not cpf.isnumeric():
+            print("CPF inválido")
+        else:
+            return cpf
+
+        
