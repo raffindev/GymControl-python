@@ -7,7 +7,7 @@ from utils.auxiliares import cabeçalho
 from operacional.acesso.autenticação import autenticar_aluno
 
 def menu_inicial():
-    alunos = ler_json("dados/alunos.json")
+    alunos = ler_json("dados/indice_alunos.json")
 
     while True:
         print(cabeçalho("GymControl"))
