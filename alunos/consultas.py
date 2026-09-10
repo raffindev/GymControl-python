@@ -13,6 +13,7 @@ def verificar_id_aluno(alunos, novo_aluno):
         
     return False
 
+# Listar alunos
 def listar_alunos(alunos):
 
     for aluno in alunos:
@@ -28,6 +29,7 @@ def listar_alunos(alunos):
             print('Status: Inativo')
         print('-'*25)
 
+# Buscar aluno especifico
 def buscar_aluno_por_id(alunos):
     while True:
         try:
@@ -42,9 +44,9 @@ def buscar_aluno_por_id(alunos):
         if id_aluno == aluno["id"]:
             return aluno
         
-    return "Aluno não encontrado"
+    return None
 
-
+# Verificar duplicidade do documento
 def verificar_duplicidade_documento(dado, alunos):
 
     for aluno in alunos:
@@ -53,6 +55,7 @@ def verificar_duplicidade_documento(dado, alunos):
 
     return False
 
+# verificar duplicidade dos dados
 def verificar_duplicidade_cadastral(dado, campo, alunos):
 
     for aluno in alunos:
@@ -63,14 +66,4 @@ def verificar_duplicidade_cadastral(dado, campo, alunos):
             return True
 
     return False
-
-def cpf_validacao():
-    while True:
-        cpf = input('Digite seu CPF: ').replace('.', '').replace('-', '')
-
-        if len(cpf) != 11 or not cpf.isnumeric():
-            print("CPF inválido")
-        else:
-            return cpf
-
         

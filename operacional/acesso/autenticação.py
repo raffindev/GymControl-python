@@ -2,13 +2,14 @@
 #  Funções relacionadas a autenticação
 # ===========================================
 
-from alunos.consultas import cpf_validacao
+from utils.validações import cpf_validacao
 
 def autenticar_aluno(alunos):
     tentativa = 0
 
     while tentativa < 3:
-        cpf = cpf_validacao()
+        cpf = input('Digite seu CPF: ')
+        cpf = cpf_validacao(cpf)
         tentativa += 1
 
         for aluno in alunos:

@@ -4,8 +4,21 @@
 
 from datetime import date
 from dateutil.relativedelta import relativedelta
+
 from alunos.estrutura_aluno import criar_estrutura_aluno, ler_caminho_cadastro, salvar_cadastro_aluno
-from alunos.consultas import verificar_duplicidade_cadastral, cpf_validacao, verificar_duplicidade_documento
+from alunos.consultas import verificar_duplicidade_documento
+
+from utils.validações import (
+    validar_nome,
+    cpf_validacao,
+    validar_data_nascimento,
+    validar_opção_sexual,
+    validar_telefone,
+    validar_email,
+    validar_endereço,
+    validar_plano,
+    validar_metodo_pagamento
+)
 
 # Cadastrar aluno - Parte 1: Dados básicos
 def dados_iniciais_aluno(alunos):
@@ -21,25 +34,25 @@ def dados_iniciais_aluno(alunos):
 
     # Cadastro Nome
     while True:
-        nome = input('Nome do Aluno: ').strip().lower()
-        palavras = nome.split()
+        nome = input('Nome do Aluno: ')
+        nome = validar_nome(nome, alunos)
 
-        if len(palavras) < 2:
-            print('Digite seu nome e sobrenome!')
-
-        elif not all(palavra.isalpha() for palavra in palavras):
-            print("O nome não pode conter caracteres especiais.")
-
-        elif any(nome == aluno["nome"] for aluno in alunos):
-            print("Nome já cadastrado. Digite outro nome.")
-
-        else:
+        if nome:
             break
 
     # Documento
-    cpf = cpf_validacao()
-    if verificar_duplicidade_documento(cpf, alunos):
-        print("CPF já cadastrado.")
+    while True:
+        cpf = input('Digite seu CPF: ')
+        cpf = cpf_validacao(cpf)
+
+        if cpf is None:
+            continue
+
+        if verificar_duplicidade_documento(cpf, alunos):
+            print("CPF já cadastrado.")
+            continue
+
+        break
 
     # Cadastro Status
     status = True
@@ -52,92 +65,41 @@ def dados_iniciais_aluno(alunos):
 }
 
 # Cadastrar aluno - Parte 2: Dados pessoais
-def dados_pessoais(dados_cadastrais, alunos):
+def dados_pessoais(alunos):
     # Data de nascimento e Idade
-    while True:
-        try:
-            dia = int(input("Dia: "))
-            mes = int(input("Mês: "))
-            ano = int(input("Ano: "))
-
-            hoje = date.today()
-
-            data_nascimento = date(ano, mes, dia)
-            if data_nascimento > hoje:
-                print("A data de nascimento não pode ser futura.")
-                continue
-
-            idade = hoje.year - data_nascimento.year
-            if (hoje.month, hoje.day) < (data_nascimento.month, data_nascimento.day):
-                idade -= 1
-
-            break
-
-        except ValueError:
-            print("Somente números válidos devem ser informados.")
+    data_nascimento, idade = validar_data_nascimento()
 
     # Sexo Masculino / Feminino
     while True:
-        sexo = input("Digite o Sexo: [M/F] ").upper()
-        if sexo not in ("M", "F"):
-            print("Sexo inválido")
-        else:
+        sexo = input("Digite o Sexo: [M/F/Outros] ")
+        sexo = validar_opção_sexual(sexo)
+
+        if sexo:
             break
 
     # Telefone
     while True:
-        telefone = input('Digite seu telefone com DDD: ').replace('.','').replace('-','')
+        telefone = input('Digite seu telefone com DDD: ')
+        telefone = validar_telefone(telefone, alunos)
 
-        if len(telefone) != 11 or not telefone.isnumeric():
-            print("telefone inválido")
-
-        elif verificar_duplicidade_cadastral(telefone, "telefone", alunos):
-            print('telefone já cadastrado.')
-            
-        else:
+        if telefone:
             break
 
     # Email
     while True:
-        email = input('E-mail: ').lower().strip()
+        email = input('E-mail: ')
+        email = validar_email(email, alunos)
 
-        if email.count('@') != 1:
-            print('E-mail inválido.')
-
-        elif not email.split('@')[0]:
-            print('E-mail inválido.')
-
-        else:
-            apos_arroba = email.split('@')[1]
-
-            if '.' not in apos_arroba:
-                print('E-mail inválido.')
-
-            elif verificar_duplicidade_cadastral(email, "email", alunos):
-                print('E-mail já cadastrado.')
-
-            else:
-                break
+        if email:
+            break
 
     # Endereço
-    endereço = {}
-    while True:
+    cidade = input("Cidade: ")
+    logradouro = input("Logradouro: ")
+    numero = input("Número: ")
+    cep = input("CEP: ")
 
-        endereço["cidade"] = input("Cidade: ").strip()
-        if not endereço["cidade"]:
-            print("Cidade não pode ficar vazia")
-            continue
-
-        endereço["logradouro"] = input("Logradouro: ").strip()
-        endereço["numero"] = input("numero: ").strip()
-
-        endereço["cep"] = input("CEP: ").replace("-", "").strip()
-
-        if len(endereço["cep"]) != 8 or not endereço["cep"].isnumeric():
-            print("CEP inválido")
-            continue
-
-        break
+    endereço = validar_endereço(cidade, logradouro, numero, cep)
 
     return{
     "data_nascimento": str(data_nascimento),
@@ -152,10 +114,10 @@ def dados_pessoais(dados_cadastrais, alunos):
 def dados_plano_pagamento():
     # Plano do aluno
     while True:
-        plano = input('Plano: [Mensal/Trimestral/Anual] ').lower().strip()
-        if plano not in ("mensal", "trimestral", "anual"):
-            print("Escolha um plano válido.")
-        else:
+        plano = input('Plano: [Mensal/Trimestral/Anual] ')
+        plano = validar_plano(plano)
+
+        if plano:
             break
 
     # Data de início
@@ -173,14 +135,10 @@ def dados_plano_pagamento():
 
     # Método de pagamento
     while True:
-        pagamento = input(
-            'Pagamento: [Pix/Dinheiro/Cartão de credito/Cartão de debito] '
-        ).lower().strip().replace(' ','-')
+        pagamento = input('Pagamento: [Pix/Dinheiro/Cartão de credito/Cartão de debito] ')
+        pagamento = validar_metodo_pagamento(pagamento)
 
-        if pagamento not in ("pix", "cartão-de-credito", "cartão-de-debito", "dinheiro"):
-            print("Método de pagamento inválido.")
-            
-        else:
+        if pagamento:
             break
 
     # Status inicial do pagamento
