@@ -154,6 +154,8 @@ def validar_opcao(opcoes, mensagem):
     while True:
         try:
             opção = int(input(mensagem))
+            if opção == 0:
+                return 0
 
             valor = opcoes.get(opção)
 

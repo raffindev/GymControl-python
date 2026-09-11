@@ -35,15 +35,20 @@ def listar_alunos(alunos):
 def buscar_aluno_por_id(alunos):
     while True:
         try:
-            id_aluno = int(input("ID: "))
-            if id_aluno > 0:
-                break
+            id_aluno = int(input("ID do aluno (0 - Voltar): "))
+
+            if id_aluno == 0:
+                return 0
+
+            if id_aluno < 0:
+                print("ID inválido.")
+                continue
+
+            for aluno in alunos:
+                if id_aluno == aluno["id"]:
+                    return aluno
+
+            print("Aluno não encontrado.")
 
         except ValueError:
-            print("ID inválido")
-
-    for aluno in alunos:
-        if id_aluno == aluno["id"]:
-            return aluno
-        
-    return None
+            print("Digite um ID válido.")
