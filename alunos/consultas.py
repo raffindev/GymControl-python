@@ -2,7 +2,7 @@
 #  Funções relacionadas a Buscar.
 # =================================
 
-from alunos.estrutura_aluno import ler_caminho_cadastro
+from utils.auxiliares import cabeçalho
 
 # Verificar ID
 def verificar_id_aluno(alunos, novo_aluno):
@@ -15,6 +15,8 @@ def verificar_id_aluno(alunos, novo_aluno):
 
 # Listar alunos
 def listar_alunos(alunos):
+
+    print(cabeçalho("ALUNOS"))
 
     for aluno in alunos:
         print(
@@ -38,32 +40,10 @@ def buscar_aluno_por_id(alunos):
                 break
 
         except ValueError:
-            print("ID Inválido")
+            print("ID inválido")
 
     for aluno in alunos:
         if id_aluno == aluno["id"]:
             return aluno
         
     return None
-
-# Verificar duplicidade do documento
-def verificar_duplicidade_documento(dado, alunos):
-
-    for aluno in alunos:
-        if aluno["documento"] == dado:
-            return True
-
-    return False
-
-# verificar duplicidade dos dados
-def verificar_duplicidade_cadastral(dado, campo, alunos):
-
-    for aluno in alunos:
-        id_aluno = aluno["id"]
-        
-        dados_cadastrais = ler_caminho_cadastro(id_aluno)
-        if dados_cadastrais.get(campo) == dado:
-            return True
-
-    return False
-        

@@ -1,1 +1,46 @@
-[]
+[
+    {
+        "codigo": "DIO369001",
+        "nome": "Diogo Lindoia",
+        "documento": "78965412369",
+        "data_nascimento": "1990-07-16",
+        "idade": 36,
+        "sexo": "Outros",
+        "telefone": "11998899888",
+        "email": "abnsur@gmail.com",
+        "endereço": {
+            "cidade": "São Paulo",
+            "logradouro": "Rua 01",
+            "numero": "s/n",
+            "cep": "09582133"
+        },
+        "cargo": "Recepcionista",
+        "turno": "06:00 às 12:00",
+        "data_admissao": "2026-09-10",
+        "data_desligamento": null,
+        "tipo_vinculo": "CLT",
+        "cref": null
+    },
+    {
+        "codigo": "ABN988002",
+        "nome": "Abnsur Delatore",
+        "documento": "12345678988",
+        "data_nascimento": "1995-08-16",
+        "idade": 31,
+        "sexo": "M",
+        "telefone": "11987654879",
+        "email": "abla@gmail.com",
+        "endereço": {
+            "cidade": "Elliot",
+            "logradouro": "Oliveira Ok",
+            "numero": "12",
+            "cep": "05899789"
+        },
+        "cargo": "Instrutor",
+        "turno": "12:00 às 18:00",
+        "data_admissao": "2026-09-10",
+        "data_desligamento": null,
+        "tipo_vinculo": "Estagiário",
+        "cref": "187452"
+    }
+]

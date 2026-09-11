@@ -6,7 +6,6 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 
 from alunos.estrutura_aluno import criar_estrutura_aluno, ler_caminho_cadastro, salvar_cadastro_aluno
-from alunos.consultas import verificar_duplicidade_documento
 
 from utils.validações import (
     validar_nome,
@@ -17,11 +16,12 @@ from utils.validações import (
     validar_email,
     validar_endereço,
     validar_plano,
-    validar_metodo_pagamento
+    validar_metodo_pagamento,
+    verificar_duplicidade_documento
 )
 
-# Cadastrar aluno - Parte 1: Dados básicos
-def dados_iniciais_aluno(alunos):
+# Cadastrar aluno - Parte 1: Dados iniciais
+def dados_iniciais_aluno(alunos, funcionarios):
     # Cadastro ID
     maior_id = 0
     alunos.sort(key=lambda aluno: aluno["id"])
@@ -48,7 +48,7 @@ def dados_iniciais_aluno(alunos):
         if cpf is None:
             continue
 
-        if verificar_duplicidade_documento(cpf, alunos):
+        if verificar_duplicidade_documento(cpf, alunos, funcionarios):
             print("CPF já cadastrado.")
             continue
 
@@ -65,7 +65,7 @@ def dados_iniciais_aluno(alunos):
 }
 
 # Cadastrar aluno - Parte 2: Dados pessoais
-def dados_pessoais(alunos):
+def dados_pessoais(dados_cadastrais, alunos, funcionarios):
     # Data de nascimento e Idade
     data_nascimento, idade = validar_data_nascimento()
 
@@ -80,7 +80,7 @@ def dados_pessoais(alunos):
     # Telefone
     while True:
         telefone = input('Digite seu telefone com DDD: ')
-        telefone = validar_telefone(telefone, alunos)
+        telefone = validar_telefone(telefone, alunos, funcionarios)
 
         if telefone:
             break
@@ -88,18 +88,21 @@ def dados_pessoais(alunos):
     # Email
     while True:
         email = input('E-mail: ')
-        email = validar_email(email, alunos)
+        email = validar_email(email, alunos, funcionarios)
 
         if email:
             break
 
     # Endereço
-    cidade = input("Cidade: ")
-    logradouro = input("Logradouro: ")
-    numero = input("Número: ")
-    cep = input("CEP: ")
+    while True:
+            cidade = input("Cidade: ")
+            logradouro = input("Logradouro: ")
+            numero = input("Número: ")
+            cep = input("CEP: ")
 
-    endereço = validar_endereço(cidade, logradouro, numero, cep)
+            endereço = validar_endereço(cidade, logradouro, numero, cep)
+            if endereço:
+                break
 
     return{
     "data_nascimento": str(data_nascimento),
@@ -135,7 +138,7 @@ def dados_plano_pagamento():
 
     # Método de pagamento
     while True:
-        pagamento = input('Pagamento: [Pix/Dinheiro/Cartão de credito/Cartão de debito] ')
+        pagamento = input('Pagamento: [Pix/Dinheiro/Cartão de crédito/Cartão de débito] ')
         pagamento = validar_metodo_pagamento(pagamento)
 
         if pagamento:
@@ -155,20 +158,18 @@ def dados_plano_pagamento():
 }
 
 # Cadastra a parte inicial do aluno
-def cadastrar_base(alunos):
+def cadastrar_base(alunos, funcionarios):
 
-    dados_iniciais = dados_iniciais_aluno(alunos)
+    dados_iniciais = dados_iniciais_aluno(alunos, funcionarios)
     criar_estrutura_aluno(dados_iniciais["id"], dados_iniciais)
-    cadastro = {
-        **dados_iniciais
-    }
-    return cadastro
+
+    return dados_iniciais
 
 # Junta todas as partes do cadastro
-def cadastrar_aluno(id_aluno, alunos):
+def cadastrar_aluno(id_aluno, alunos, funcionarios):
 
     dados_cadastrais = ler_caminho_cadastro(id_aluno)
-    dados_pessoais_aluno = dados_pessoais(dados_cadastrais, alunos)
+    dados_pessoais_aluno = dados_pessoais(dados_cadastrais, alunos, funcionarios)
     dados_plano = dados_plano_pagamento()
 
     dados_cadastrais.update(dados_pessoais_aluno)

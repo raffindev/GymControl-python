@@ -3,7 +3,7 @@
 # ============================================
 
 from datetime import date
-from alunos.consultas import verificar_duplicidade_cadastral
+from alunos.estrutura_aluno import ler_caminho_cadastro
 
 # Validar Nome
 def validar_nome(nome, alunos):
@@ -65,21 +65,21 @@ def validar_opção_sexual(sexo):
         return sexo
 
 # Validar Telefone
-def validar_telefone(telefone, alunos):
+def validar_telefone(telefone, alunos, funcionarios):
     telefone = telefone.replace('.', '').replace('-', '')
 
     if len(telefone) != 11 or not telefone.isnumeric():
         print("Telefone inválido")
         return None
 
-    if verificar_duplicidade_cadastral(telefone, "telefone", alunos):
+    if verificar_duplicidade_cadastral(telefone, "telefone", alunos, funcionarios):
         print("Telefone já cadastrado.")
         return None
 
     return telefone
 
 # Validar Email
-def validar_email(email, alunos):
+def validar_email(email, alunos, funcionarios):
     email = email.lower().strip()
 
     if email.count('@') != 1:
@@ -97,7 +97,7 @@ def validar_email(email, alunos):
             print('E-mail inválido.')
             return None
 
-        elif verificar_duplicidade_cadastral(email, "email", alunos):
+        elif verificar_duplicidade_cadastral(email, "email", alunos, funcionarios):
             print('E-mail já cadastrado.')
             return None
 
@@ -139,6 +139,7 @@ def validar_plano(plano):
 
     return plano
 
+# Validar metodo pagamento
 def validar_metodo_pagamento(pagamento):
     pagamento = pagamento.lower().strip().replace(' ','-')
 
@@ -147,3 +148,52 @@ def validar_metodo_pagamento(pagamento):
         return None
 
     return pagamento
+
+# Validar Opção
+def validar_opcao(opcoes, mensagem):
+    while True:
+        try:
+            opção = int(input(mensagem))
+
+            valor = opcoes.get(opção)
+
+            if valor is None:
+                print("Opção inválida.")
+                continue
+
+            return valor
+
+        except ValueError:
+            print("Por favor, digite uma opção válida.")
+
+# verificar duplicidade do documento
+def verificar_duplicidade_documento(dado, alunos, funcionarios):
+
+    for aluno in alunos:
+        if aluno["documento"] == dado:
+            return True
+
+    for funcionario in funcionarios:
+        if funcionario["documento"] == dado:
+            return True
+        
+    return False
+
+# verificar duplicidade dos dados
+def verificar_duplicidade_cadastral(dado, campo, alunos, funcionarios):
+    for aluno in alunos:
+        id_aluno = aluno["id"]
+        dados_cadastrais = ler_caminho_cadastro(id_aluno)
+
+        if not isinstance(dados_cadastrais, dict):
+            continue
+
+        if dados_cadastrais.get(campo) == dado:
+            return True
+
+    for funcionario in funcionarios:
+        if funcionario.get(campo) == dado:
+            return True
+
+    return False
+        

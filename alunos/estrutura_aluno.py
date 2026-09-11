@@ -11,7 +11,7 @@ def criar_estrutura_aluno(id_aluno, dados):
     pasta_aluno = Path("dados") / "alunos" / f"{id_aluno:03}"
     pasta_aluno.mkdir(parents=True, exist_ok=True)
 
-    # 2. Cria pasta cadastro
+    # 2. Cria pasta de cadastro
     pasta_cadastro = pasta_aluno / "cadastro"
     pasta_cadastro.mkdir(parents=True, exist_ok=True)
 

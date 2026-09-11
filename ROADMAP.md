@@ -17,11 +17,8 @@
 * [x] Separar autenticação e autorização
 * [x] Definir estrutura inicial dos dados
 * [x] Definir `indice_alunos.json`
-* [ ] Definir estrutura definitiva de funcionários
-* [ ] Definir estrutura definitiva da empresa
-* [ ] Revisar todos os caminhos dos arquivos
-* [ ] Revisar imports
-* [ ] Revisão geral da arquitetura
+* [x] Definir estrutura definitiva de funcionários
+* [x] Definir estrutura definitiva da empresa
 
 ---
 
@@ -101,28 +98,30 @@ dados/
 
 ### Definir antes de implementar
 
-* [ ] Estrutura definitiva de `funcionarios.json`
-* [ ] Campos obrigatórios
-* [ ] Código do funcionário
-* [ ] Cargos
-* [ ] Turnos
-* [ ] Status ativo/inativo
-* [ ] Regras específicas por cargo
-* [ ] Regra do CREF para instrutores
+* [x] Estrutura definitiva de `funcionarios.json`
+* [x] Campos obrigatórios
+* [x] Código do funcionário
+* [x] Cargos
+* [x] Turnos
+* [x] Status derivada pela data de desligamento
+* [x] Regras específicas por cargo
+* [x] Regra do CREF para instrutores e Personal Trainer
+* [x] Tipos de vínculo
 
 ### Dados planejados
 
-* [ ] Nome
-* [ ] Data de nascimento
-* [ ] CPF
-* [ ] Telefone
-* [ ] E-mail
-* [ ] Código
-* [ ] Cargo
-* [ ] Turno
-* [ ] Data de admissão
-* [ ] Ativo/inativo
-* [ ] CREF quando necessário
+* [x] Nome
+* [x] Data de nascimento
+* [x] CPF
+* [x] Telefone
+* [x] E-mail
+* [x] Código
+* [x] Cargo
+* [x] Turno
+* [x] Data de admissão
+* [x] Data de desligamento
+* [x] Tipo de vínculo
+* [x] CREF quando necessário
 
 ## Consultas
 
@@ -141,6 +140,7 @@ dados/
 * [x] Autenticação por CPF
 * [x] Limite de tentativas
 * [x] Bloqueio após tentativas
+* [x] Retornar aluno autenticado
 
 ## Funcionários
 
