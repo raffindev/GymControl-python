@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "id": 1,
+        "nome": "Obi Wan Kenobi",
+        "documento": "12345678999",
+        "ativo": true
+    }
+]

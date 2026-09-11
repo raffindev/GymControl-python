@@ -1,6 +1,24 @@
 {
     "id": 1,
-    "nome": "Ale Guio",
-    "documento": "19876543212",
-    "ativo": true
+    "nome": "Obi Wan Kenobi",
+    "documento": "12345678999",
+    "ativo": true,
+    "data_nascimento": "1971-03-31",
+    "idade": 55,
+    "sexo": "M",
+    "telefone": "11978632858",
+    "email": "kenobi-obiwan@gmail.com",
+    "endereço": {
+        "cidade": "Tatuine",
+        "logradouro": "Tatuine Outland",
+        "numero": "s/n",
+        "cep": "08879312"
+    },
+    "plano": {
+        "tipo": "anual",
+        "data_inicio": "2026-09-11",
+        "data_vencimento": "2027-09-11",
+        "metodo_pagamento": "cartão-de-crédito",
+        "status_pagamento": "pago"
+    }
 }
