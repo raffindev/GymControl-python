@@ -1,1 +1,84 @@
-{}
+{
+    "1": {
+        "nome": "Superior",
+        "exercicios": [
+            {
+                "nome_exercicio": "Supino reto",
+                "series": 3,
+                "repeticoes": "8-10",
+                "carga": 80
+            },
+            {
+                "nome_exercicio": "Supino inclinado",
+                "series": 3,
+                "repeticoes": "10",
+                "carga": 60
+            },
+            {
+                "nome_exercicio": "Remada baixa",
+                "series": 3,
+                "repeticoes": "8-12",
+                "carga": 50
+            },
+            {
+                "nome_exercicio": "Tríceps corda",
+                "series": 3,
+                "repeticoes": "10-12",
+                "carga": 35
+            },
+            {
+                "nome_exercicio": "Elevação lateral",
+                "series": 3,
+                "repeticoes": "12-15",
+                "carga": 10
+            },
+            {
+                "nome_exercicio": "Rosca direta",
+                "series": 3,
+                "repeticoes": "10-12",
+                "carga": 15
+            }
+        ]
+    },
+    "2": {
+        "nome": "Pernas",
+        "exercicios": [
+            {
+                "nome_exercicio": "Agachamento livre",
+                "series": 4,
+                "repeticoes": "8-10",
+                "carga": 80
+            },
+            {
+                "nome_exercicio": "Leg press",
+                "series": 4,
+                "repeticoes": "10-12",
+                "carga": 120
+            },
+            {
+                "nome_exercicio": "Cadeira extensora",
+                "series": 3,
+                "repeticoes": "12-15",
+                "carga": 40
+            },
+            {
+                "nome_exercicio": "Mesa flexora",
+                "series": 3,
+                "repeticoes": "10-12",
+                "carga": 35
+            },
+            {
+                "nome_exercicio": "Elevação pélvica",
+                "series": 3,
+                "repeticoes": "10-12",
+                "carga": 60
+            },
+            {
+                "nome_exercicio": "Panturrilha em pé",
+                "series": 4,
+                "repeticoes": "12-15",
+                "carga": 50
+            }
+        ]
+    }
+}

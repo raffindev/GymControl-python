@@ -1,1 +1,53 @@
-[]
+[
+  {
+    "data_inicio": "01/06/2026",
+    "data_fim": "30/06/2026",
+    "treinos": {
+      "1": {
+        "nome": "Superior",
+        "exercicios": [
+          {
+            "nome_exercicio": "Supino reto",
+            "series": 3,
+            "repeticoes": 10,
+            "carga": 20
+          }
+        ]
+      }
+    }
+  },
+  {
+    "data_inicio": "01/07/2026",
+    "data_fim": "31/07/2026",
+    "treinos": {
+      "1": {
+        "nome": "Superior",
+        "exercicios": [
+          {
+            "nome_exercicio": "Supino reto",
+            "series": 3,
+            "repeticoes": 10,
+            "carga": 25
+          }
+        ]
+      }
+    }
+  },
+  {
+    "data_inicio": "01/08/2026",
+    "data_fim": "31/08/2026",
+    "treinos": {
+      "1": {
+        "nome": "Superior",
+        "exercicios": [
+          {
+            "nome_exercicio": "Supino reto",
+            "series": 4,
+            "repeticoes": "8-10",
+            "carga": 30
+          }
+        ]
+      }
+    }
+  }
+]
