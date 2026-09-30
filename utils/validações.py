@@ -1,11 +1,14 @@
-# ============================================
-#  Funções relacionadas a validações de dados
-# ============================================
+"""
+Funções responsáveis pela validação de dados do sistema.
+"""
 
 from datetime import date
 from alunos.estrutura_aluno import ler_caminho_cadastro
 
-# Validar Nome
+
+# ================================
+# Dados pessoais
+# ================================
 def validar_nome(nome, alunos):
     nome = nome.strip().title()
     palavras = nome.split()
@@ -22,9 +25,9 @@ def validar_nome(nome, alunos):
     else:
         return nome
 
-# Validar Cpf
-def cpf_validacao(cpf):
-    cpf = cpf.replace('.', '').replace('-', '')
+
+def validar_cpf(cpf):
+    cpf = cpf.replace(".", "").replace("-", "")
 
     if len(cpf) != 11 or not cpf.isnumeric():
         print("CPF inválido")
@@ -32,7 +35,7 @@ def cpf_validacao(cpf):
 
     return cpf
 
-# Data de nascimento e Idade
+
 def validar_data_nascimento():
     while True:
         try:
@@ -56,54 +59,15 @@ def validar_data_nascimento():
         except ValueError:
             print("Somente números válidos devem ser informados.")
 
-# Validar Sexo
-def validar_opção_sexual(sexo):
+
+def validar_sexo(sexo):
     sexo = sexo.capitalize()
     if sexo not in ("M", "F", "Outros"):
         print("Sexo inválido")
     else:
         return sexo
 
-# Validar Telefone
-def validar_telefone(telefone, alunos, funcionarios):
-    telefone = telefone.replace('.', '').replace('-', '')
 
-    if len(telefone) != 11 or not telefone.isnumeric():
-        print("Telefone inválido")
-        return None
-
-    if verificar_duplicidade_cadastral(telefone, "telefone", alunos, funcionarios):
-        print("Telefone já cadastrado.")
-        return None
-
-    return telefone
-
-# Validar Email
-def validar_email(email, alunos, funcionarios):
-    email = email.lower().strip()
-
-    if email.count('@') != 1:
-        print('E-mail inválido.')
-        return None
-
-    elif not email.split('@')[0]:
-        print('E-mail inválido.')
-        return None
-
-    else:
-        apos_arroba = email.split('@')[1]
-
-        if '.' not in apos_arroba:
-            print('E-mail inválido.')
-            return None
-
-        elif verificar_duplicidade_cadastral(email, "email", alunos, funcionarios):
-            print('E-mail já cadastrado.')
-            return None
-
-    return email
-
-# Validar Endereço
 def validar_endereço(cidade, logradouro, numero, cep):
     cidade = cidade.strip().title()
     logradouro = logradouro.strip().title()
@@ -122,53 +86,51 @@ def validar_endereço(cidade, logradouro, numero, cep):
         print("CEP inválido.")
         return None
 
-    return {
-        "cidade": cidade,
-        "logradouro": logradouro,
-        "numero": numero,
-        "cep": cep
-    }
+    return {"cidade": cidade, "logradouro": logradouro, "numero": numero, "cep": cep}
 
-# Validar Plano
-def validar_plano(plano):
-    plano = plano.lower().strip()
 
-    if plano not in ("mensal", "trimestral", "anual"):
-        print("Escolha um plano válido.")
+# ================================
+# Dados Compartilhados
+# ================================
+def validar_telefone(telefone, alunos, funcionarios):
+    telefone = telefone.replace(".", "").replace("-", "")
+
+    if len(telefone) != 11 or not telefone.isnumeric():
+        print("Telefone inválido")
         return None
 
-    return plano
-
-# Validar metodo pagamento
-def validar_metodo_pagamento(pagamento):
-    pagamento = pagamento.lower().strip().replace(' ','-')
-
-    if pagamento not in ("pix", "cartão-de-crédito", "cartão-de-credito", "cartão-de-debito", "cartão-de-débito", "dinheiro"):
-        print("Método de pagamento inválido.")
+    if verificar_duplicidade_cadastral(telefone, "telefone", alunos, funcionarios):
+        print("Telefone já cadastrado.")
         return None
 
-    return pagamento
+    return telefone
 
-# Validar Opção
-def validar_opcao(opcoes, mensagem):
-    while True:
-        try:
-            opção = int(input(mensagem))
-            if opção == 0:
-                return 0
 
-            valor = opcoes.get(opção)
+def validar_email(email, alunos, funcionarios):
+    email = email.lower().strip()
 
-            if valor is None:
-                print("Opção inválida.")
-                continue
+    if email.count("@") != 1:
+        print("E-mail inválido.")
+        return None
 
-            return valor
+    elif not email.split("@")[0]:
+        print("E-mail inválido.")
+        return None
 
-        except ValueError:
-            print("Por favor, digite uma opção válida.")
+    else:
+        apos_arroba = email.split("@")[1]
 
-# verificar duplicidade do documento
+        if "." not in apos_arroba:
+            print("E-mail inválido.")
+            return None
+
+        elif verificar_duplicidade_cadastral(email, "email", alunos, funcionarios):
+            print("E-mail já cadastrado.")
+            return None
+
+    return email
+
+
 def verificar_duplicidade_documento(dado, alunos, funcionarios):
 
     for aluno in alunos:
@@ -178,10 +140,10 @@ def verificar_duplicidade_documento(dado, alunos, funcionarios):
     for funcionario in funcionarios:
         if funcionario["documento"] == dado:
             return True
-        
+
     return False
 
-# verificar duplicidade dos dados
+
 def verificar_duplicidade_cadastral(dado, campo, alunos, funcionarios):
     for aluno in alunos:
         id_aluno = aluno["id"]
@@ -198,4 +160,55 @@ def verificar_duplicidade_cadastral(dado, campo, alunos, funcionarios):
             return True
 
     return False
-        
+
+
+# ================================
+# Dados Financeiros
+# ================================
+def validar_plano(plano):
+    plano = plano.lower().strip()
+
+    if plano not in ("mensal", "trimestral", "anual"):
+        print("Escolha um plano válido.")
+        return None
+
+    return plano
+
+
+def validar_metodo_pagamento(pagamento):
+    pagamento = pagamento.lower().strip().replace(" ", "-")
+
+    if pagamento not in (
+        "pix",
+        "cartão-de-crédito",
+        "cartão-de-credito",
+        "cartão-de-debito",
+        "cartão-de-débito",
+        "dinheiro",
+    ):
+        print("Método de pagamento inválido.")
+        return None
+
+    return pagamento
+
+
+# ================================
+# Dados de Sistema
+# ================================
+def validar_opçao(opçoes, mensagem):
+    while True:
+        try:
+            opçao = int(input(mensagem))
+            if opçao == 0:
+                return 0
+
+            valor = opçoes.get(opçao)
+
+            if valor is None:
+                print("Opção inválida.")
+                continue
+
+            return valor
+
+        except ValueError:
+            print("Por favor, digite uma opção válida.")
