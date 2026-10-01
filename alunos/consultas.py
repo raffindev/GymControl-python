@@ -1,37 +1,33 @@
-# =================================
-#  Funções relacionadas a Buscar.
-# =================================
+"""
+Funções responsáveis pela consulta de dados dos alunos.
+"""
 
 from utils.auxiliares import cabeçalho
 
-# Verificar ID
+
 def verificar_id_aluno(alunos, novo_aluno):
     for aluno in alunos:
 
         if novo_aluno["id"] == aluno["id"]:
             return True
-        
+
     return False
 
-# Listar alunos
-def listar_alunos(alunos):
 
+def listar_alunos(alunos):
     print(cabeçalho("ALUNOS"))
 
     for aluno in alunos:
-        print(
-            f'\nID: {aluno["id"]}'
-            f'\nNome: {aluno["nome"]}'
-        )
+        print(f'\nID: {aluno["id"]}' f'\nNome: {aluno["nome"]}')
 
         if aluno["ativo"]:
-            print('Status: Ativo')
+            print("Status: Ativo")
 
         else:
-            print('Status: Inativo')
-        print('-'*25)
+            print("Status: Inativo")
+        print("-" * 25)
 
-# Buscar aluno especifico
+
 def buscar_aluno_por_id(alunos):
     while True:
         try:
