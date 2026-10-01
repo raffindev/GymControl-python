@@ -1,12 +1,13 @@
-# =======================================================
-#  Funções relacionadas a estrutura de cadastro do aluno
-# =======================================================
+"""
+Funções responsáveis pela estrutura de dados dos alunos.
+"""
 
 from pathlib import Path
-from utils.arquivos import salvar_json, ler_json
+
+from utils.arquivos import ler_json, salvar_json
+
 
 def criar_estrutura_aluno(id_aluno, dados):
-
     # 1. Cria pasta do aluno
     pasta_aluno = Path("dados") / "alunos" / f"{id_aluno:03}"
     pasta_aluno.mkdir(parents=True, exist_ok=True)
@@ -35,8 +36,8 @@ def criar_estrutura_aluno(id_aluno, dados):
     salvar_json(pasta_avaliacoes / "avaliacao_atual.json", {})
     salvar_json(pasta_avaliacoes / "historico_avaliacoes.json", [])
 
-def ler_caminho_cadastro(id_aluno):
 
+def ler_caminho_aluno(id_aluno):
     caminho_cadastro = (
         Path("dados")
         / "alunos"
@@ -46,6 +47,7 @@ def ler_caminho_cadastro(id_aluno):
     )
 
     return ler_json(caminho_cadastro)
+
 
 def salvar_cadastro_aluno(id_aluno, dados):
 

@@ -1,7 +1,7 @@
-# ================================
-#  Funções auxiliares do projeto
-# ================================
+"""
+Funções auxiliares reutilizáveis do sistema.
+"""
 
-# Cabeçalho padrão.
+
 def cabeçalho(txt):
-    return '='*40 + '\n' + txt.center(40) + '\n' + '='*40
+    return "=" * 40 + "\n" + txt.center(40) + "\n" + "=" * 40
